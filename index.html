@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D.U.S.T. Festival</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      color: #111;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2em;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.2em;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-top: 0;
+      font-size: 1.2em;
+    }
+
+    .subtitle {
+      margin: 1em 0;
+      font-size: 1.1em;
+    }
+
+    nav {
+      margin: 2em 0;
+    }
+
+    nav a {
+  margin: 0 1.5em;
+  text-decoration: underline;
+  color: #0000EE; /* Classic hyperlink blue */
+  font-weight: normal;
+  font-size: 1em;
+}
+
+    .quote {
+      margin: 2em 0 1em;
+      font-style: italic;
+    }
+
+    .description {
+      max-width: 600px;
+      margin: 1em auto;
+      line-height: 1.5;
+    }
+
+    .contact {
+      margin-top: 2em;
+      line-height: 1.6;
+    }
+
+    .contact strong {
+      display: block;
+      margin-top: 1em;
+    }
+
+    .dust-d { color: #E4572E; }  /* red clay */
+.dust-u { color: #A8A428; }  /* ochre/yellowdust */
+.dust-s { color: #4A90A4; }  /* desert sky */
+.dust-t { color: #9A6B45; }  /* rust brown */
+
+  </style>
+</head>
+<body>
+
+<canvas id="dustCanvas"></canvas>
+
+<div class="overlay">
+  <h1>
+  <span class="dust-d">D</span>.
+  <span class="dust-u">U</span>.
+  <span class="dust-s">S</span>.
+  <span class="dust-t">T</span>.
+</h1>
+  <h2>May 23<sup>rd</sup> to 26<sup>th</sup></h2>
+
+  <div class="subtitle">Music, Art, Camping & Community</div>
+  <div class="subtitle">Lobo Flats, TX (9 miles from the ghost town)</div>
+
+  <nav>
+    <a href="#attend">Attend</a>
+    <a href="#camp">Camp</a>
+    <a href="#perform">Perform/Exhibit</a>
+    <a href="#support">Support</a>
+  </nav>
+
+  <div class="quote">D.U.S.T. is an unstable acronym.</div>
+
+  <div class="description">
+    The inspiration for D.U.S.T comes from the Lobo ghost town and the group of Germans and friends who held music and art festivals there for over 20 years. Although we are nine miles from the ghost town, our goal is to keep the spirit of Lobo alive by continuing the tradition of annual gatherings around art, music and community. Here’s to the D.U.S.T. community and to all the friends we haven’t met yet.
+  </div>
+
+  <div class="contact">
+    <p>Any questions? Please just ask! We look forward to hearing from you.</p>
+    <strong>IG:</strong> lobodust<br>
+    <strong>Text:</strong> 915-213-6503<br>
+    <strong>Email:</strong> dustlobo@gmail.com
+  </div>
+</div>
+
+<script>
+// Set up canvas
+const canvas = document.getElementById('dustCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const acronyms = [
+  "Dreams Under Strange Trees",
+  "Dance Until Sunset Transcends",
+  "Drifters Uniting Somewhere Tonight",
+  "Dunes Under Silent Thunder",
+  "Dusty Unicorns Singing Together",
+  "Deep Unmapped Sound Territories",
+  "Desert’s Unwritten Silent Tales",
+  "Daring Undertakings Shift Time",
+  "Distant Unfamiliar Sacred Tones",
+  "Desolation Under Starlit Trails",
+  "Dulcet Undertows Serenading Twilight",
+  "Dawn Unfolds Slowly Tonight",
+  "Dim Unknown Spectral Terrain",
+  "Departures Unravel Silent Truths",
+  "Dark Unknowns Stirring Tonight",
+  "Delirious Unplanned Sonic Travels",
+  "Dense Undercurrents Shaping Tomorrow",
+  "Disorderly Universes Spinning Tangents",
+  "Dusty Uncharted Sonic Topographies",
+  "Determined Utopians Seek Tents"
+];
+
+const particles = [];
+
+class DustParticle {
+  constructor() {
+    this.text = acronyms[Math.floor(Math.random() * acronyms.length)];
+    this.letters = this.text.split('');
+    this.x = Math.random() * canvas.width;
+    this.y = -20;
+    this.speedY = 0.3 + Math.random() * 0.7;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.opacity = 0.3 + Math.random() * 0.3;
+    this.fontSize = 14 + Math.random() * 8;
+    this.offsets = this.letters.map(() => Math.random() * 5);
+  }
+
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX;
+  }
+
+  draw() {
+    ctx.globalAlpha = this.opacity;
+    ctx.font = `${this.fontSize}px sans-serif`;
+    ctx.fillStyle = "#111";
+
+    let letterX = this.x;
+    let letterY = this.y;
+
+    for (let i = 0; i < this.letters.length; i++) {
+      ctx.fillText(this.letters[i], letterX, letterY + this.offsets[i]);
+      letterX += ctx.measureText(this.letters[i]).width;
+    }
+
+    ctx.globalAlpha = 1;
+  }
+}
+
+function addParticle() {
+  if (particles.length < 60) {
+    particles.push(new DustParticle());
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+    p.update();
+    p.draw();
+    if (p.y > canvas.height + 50 || p.x < -300 || p.x > canvas.width + 300) {
+      particles.splice(i, 1);
+    }
+  });
+
+  addParticle();
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
