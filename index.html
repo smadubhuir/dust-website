@@ -6,23 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  color: #111;
-  background: #fff;
-  overflow-x: hidden;  /* only block sideways scroll */
-}
+      background: url('images/homepagehero.jpg') no-repeat center center;
+      background-size: cover;
+      font-family: sans-serif;
+      color: #111;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 0;
       width: 100%;
       height: 100%;
+      z-index: 0;
       pointer-events: none;
+      background: transparent;
     }
 
     .overlay {
@@ -53,12 +54,12 @@
     }
 
     nav a {
-  margin: 0 1.5em;
-  text-decoration: underline;
-  color: #0000EE; /* Classic hyperlink blue */
-  font-weight: normal;
-  font-size: 1em;
-}
+      margin: 0 1.5em;
+      text-decoration: underline;
+      color: #0000EE;
+      font-weight: normal;
+      font-size: 1em;
+    }
 
     .quote {
       margin: 2em 0 1em;
@@ -81,11 +82,27 @@
       margin-top: 1em;
     }
 
-    .dust-d { color: #E4572E; }  /* red clay */
-.dust-u { color: #A8A428; }  /* ochre/yellowdust */
-.dust-s { color: #4A90A4; }  /* desert sky */
-.dust-t { color: #9A6B45; }  /* rust brown */
+    .dust-d { color: #E4572E; }
+    .dust-u { color: #A8A428; }
+    .dust-s { color: #4A90A4; }
+    .dust-t { color: #9A6B45; }
 
+    .homepage-images {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      gap: 2em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .homepage-images img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
   </style>
 </head>
 <body>
@@ -94,22 +111,22 @@
 
 <div class="overlay">
   <h1>
-  <span class="dust-d">D</span>.
-  <span class="dust-u">U</span>.
-  <span class="dust-s">S</span>.
-  <span class="dust-t">T</span>.
-</h1>
+    <span class="dust-d">D</span>.
+    <span class="dust-u">U</span>.
+    <span class="dust-s">S</span>.
+    <span class="dust-t">T</span>.
+  </h1>
   <h2>May 23<sup>rd</sup> to 26<sup>th</sup></h2>
 
   <div class="subtitle">Music, Art, Camping & Community</div>
   <div class="subtitle">Lobo Flats, TX (9 miles from the ghost town)</div>
 
   <nav>
-  <a href="attend.html">Attend</a>
-  <a href="camp.html">Camp</a>
-  <a href="perform.html">Perform/Exhibit</a>
-  <a href="support.html">Support</a>
-</nav>
+    <a href="attend.html">Attend</a>
+    <a href="camp.html">Camp</a>
+    <a href="perform.html">Perform/Exhibit</a>
+    <a href="support.html">Support</a>
+  </nav>
 
   <div class="quote">D.U.S.T. is an unstable acronym.</div>
 
@@ -119,14 +136,20 @@
 
   <div class="contact">
     <p>Any questions? Please just ask! We look forward to hearing from you.</p>
-    <strong>IG:</strong> lobodust<br>
+    <strong>IG:</strong> <a href="https://www.instagram.com/dustlobo/" target="_blank">dustlobo</a><br>
     <strong>Text:</strong> 915-213-6503<br>
     <strong>Email:</strong> dustlobo@gmail.com
   </div>
 </div>
 
+<!-- 📸 Images Below the Overlay -->
+<div class="homepage-images">
+  <img src="images/cars.jpeg" alt="Desert cars at D.U.S.T.">
+  <img src="images/people_watching.jpeg" alt="People watching at D.U.S.T.">
+</div>
+
+<!-- 🌀 Falling Acronym Rain -->
 <script>
-// Set up canvas
 const canvas = document.getElementById('dustCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
